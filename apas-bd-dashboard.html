@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APAS Consultancy — Business Development Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFF9F0;
+  --surface:#FFFFFF;
+  --ink:#1A1A2E;
+  --ink-soft:#5B5B72;
+  --line:rgba(26,26,46,0.11);
+  --line-strong:rgba(26,26,46,0.2);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Manrope',sans-serif;
+  font-size:18px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:'JetBrains Mono',monospace;}
+h1,h2,h3,h4{font-family:'Fraunces',serif;}
+a{color:inherit;}
+a:focus-visible,button:focus-visible{outline:3px solid var(--ink);outline-offset:3px;}
+
+.topbar{
+  position:sticky;top:0;z-index:60;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem 2rem;
+  background:rgba(255,249,240,0.93);
+  backdrop-filter:blur(10px);
+  border-bottom:2px solid var(--ink);
+}
+.wordmark{font-family:'Fraunces',serif;font-weight:900;letter-spacing:0.01em;font-size:1.25rem;}
+.wordmark span{color:#E0383D;}
+.tag-confidential{font-family:'JetBrains Mono',monospace;font-size:0.78rem;letter-spacing:0.06em;color:var(--ink-soft);text-transform:uppercase;}
+
+.hero{max-width:1220px;margin:0 auto;padding:4rem 2rem 2.6rem;}
+.eyebrow{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.12em;font-size:0.85rem;color:#E0383D;font-weight:600;margin:0 0 1.1rem;}
+.hero h1{font-size:clamp(2.6rem,5.6vw,4.4rem);line-height:1.04;font-weight:900;margin:0;max-width:17ch;letter-spacing:-0.01em;}
+.hero .dek{max-width:62ch;color:var(--ink-soft);margin:1.4rem 0 0;font-size:1.22rem;font-weight:500;}
+.stats{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.6rem;}
+.stat{background:var(--surface);border:2px solid var(--ink);border-radius:16px;padding:1.1rem 1.5rem;min-width:150px;box-shadow:4px 4px 0 rgba(26,26,46,0.08);}
+.stat .num{font-family:'Fraunces',serif;font-weight:800;font-size:2rem;display:block;}
+.stat .label{font-family:'JetBrains Mono',monospace;text-transform:uppercase;font-size:0.74rem;letter-spacing:0.05em;color:var(--ink-soft);}
+
+.quicknav{
+  position:sticky;top:65px;z-index:50;
+  background:var(--bg);border-bottom:2px solid var(--ink);
+  display:flex;gap:0.6rem;overflow-x:auto;
+  padding:0.8rem 2rem;
+  scrollbar-width:thin;
+}
+.quicknav::-webkit-scrollbar{height:5px;}
+.qn-pill{
+  display:inline-flex;align-items:center;gap:0.5rem;flex-shrink:0;
+  font-family:'JetBrains Mono',monospace;font-size:0.84rem;font-weight:600;
+  padding:0.5rem 0.95rem;border-radius:999px;border:2px solid var(--ink);
+  text-decoration:none;color:var(--ink);white-space:nowrap;background:var(--surface);
+  transition:background 0.15s,transform 0.1s;
+}
+.qn-pill .dot{width:9px;height:9px;border-radius:50%;background:var(--c);flex-shrink:0;}
+.qn-pill.active{background:var(--c);color:#fff;}
+.qn-pill.active .dot{background:#fff;}
+
+main{max-width:1220px;margin:0 auto;padding:0 2rem;}
+.phase{padding:4rem 2rem;margin:0 -2rem;border-bottom:2px solid var(--ink);background:color-mix(in srgb, var(--accent) 9%, var(--bg));}
+.phase:last-of-type{border-bottom:none;}
+.phase-head{display:flex;gap:1.3rem;align-items:flex-start;margin-bottom:2.4rem;}
+.num-badge{
+  font-family:'Fraunces',serif;font-weight:900;font-size:1.5rem;color:#fff;
+  background:var(--accent);width:56px;height:56px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:4px 4px 0 rgba(26,26,46,0.18);
+}
+.phase-head .eyebrow{color:var(--accent-deep);margin-bottom:0.4rem;}
+.phase-head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);margin:0 0 0.6rem;font-weight:800;line-height:1.08;}
+.phase-head .dek{color:var(--ink-soft);max-width:66ch;margin:0;font-size:1.12rem;font-weight:500;}
+
+.subhead{font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.06em;font-size:0.8rem;font-weight:600;color:var(--accent-deep);margin:2.2rem 0 0.9rem;display:flex;align-items:center;gap:0.6rem;}
+.subhead:first-of-type{margin-top:0;}
+.subhead::after{content:"";flex:1;height:2px;background:var(--line);}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.1rem;}
+.card{background:var(--surface);border:2px solid var(--ink);border-radius:16px;padding:1.4rem 1.5rem;box-shadow:4px 4px 0 rgba(26,26,46,0.07);}
+.card h3{font-size:1.12rem;margin:0 0 0.65rem;font-weight:700;}
+.card p{margin:0;color:var(--ink-soft);font-size:1rem;}
+.card ul{margin:0;padding-left:1.15rem;}
+.card li{margin-bottom:0.45rem;font-size:1rem;color:var(--ink-soft);}
+.card li::marker{color:var(--accent);font-weight:700;}
+.card.wide{grid-column:1 / -1;}
+.card .price{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--accent-deep);font-size:0.95rem;margin-top:0.6rem;display:block;}
+
+.tags{display:flex;flex-wrap:wrap;gap:0.55rem;}
+.tag{font-family:'JetBrains Mono',monospace;font-size:0.86rem;font-weight:500;padding:0.42rem 0.85rem;border-radius:999px;background:var(--surface);color:var(--accent-deep);border:2px solid color-mix(in srgb, var(--accent) 55%, var(--ink));white-space:nowrap;}
+
+table{width:100%;border-collapse:collapse;background:var(--surface);border-radius:14px;overflow:hidden;border:2px solid var(--ink);box-shadow:4px 4px 0 rgba(26,26,46,0.07);}
+th,td{padding:0.85rem 1rem;text-align:left;font-size:0.97rem;border-bottom:1px solid var(--line);}
+th{background:var(--ink);color:#fff;font-family:'JetBrains Mono',monospace;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.04em;font-weight:600;}
+tr:last-child td{border-bottom:none;}
+td{color:var(--ink-soft);}
+td strong{color:var(--ink);}
+.table-wrap{overflow-x:auto;}
+
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0.9rem;}
+.tl-step{background:var(--surface);border:2px solid var(--ink);border-radius:14px;padding:1.1rem 1.2rem;box-shadow:4px 4px 0 rgba(26,26,46,0.07);}
+.tl-step .yr{font-family:'JetBrains Mono',monospace;text-transform:uppercase;font-size:0.74rem;color:var(--accent-deep);letter-spacing:0.04em;font-weight:700;}
+.tl-step p{margin:0.4rem 0 0;font-size:0.95rem;color:var(--ink-soft);}
+
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;}
+.swot .box{border-radius:14px;padding:1.3rem 1.5rem;border:2px solid var(--sc);background:color-mix(in srgb, var(--sc) 9%, white);}
+.swot .box h4{margin:0 0 0.7rem;font-size:0.95rem;color:var(--sc);text-transform:uppercase;letter-spacing:0.04em;font-family:'JetBrains Mono',monospace;font-weight:700;}
+.swot .box li{font-size:0.97rem;color:var(--ink-soft);margin-bottom:0.35rem;}
+
+.quote-block{background:var(--ink);color:#fff;border-radius:18px;padding:1.8rem 2.1rem;font-family:'Fraunces',serif;font-weight:600;font-size:1.25rem;line-height:1.4;}
+
+.closing{background:#1A1A2E;color:#FFF9F0;padding:4.5rem 2rem 3.6rem;}
+.closing-inner{max-width:1100px;margin:0 auto;}
+.closing .eyebrow{color:#F2A900;}
+.motto{font-weight:800;font-size:clamp(2rem,4.2vw,3rem);line-height:1.14;max-width:19ch;margin:1rem 0 2.8rem;font-family:'Fraunces',serif;}
+.closing .subhead{color:rgba(255,249,240,0.55);}
+.closing .subhead::after{background:rgba(255,249,240,0.18);}
+.closing-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:2.8rem;margin-top:1rem;}
+.org{display:flex;flex-direction:column;align-items:center;gap:1rem;margin-top:1.2rem;}
+.org .top{background:rgba(255,255,255,0.1);border:2px solid rgba(255,249,240,0.3);padding:0.8rem 1.5rem;border-radius:12px;font-weight:700;font-size:0.98rem;}
+.org .branches{display:flex;gap:0.8rem;flex-wrap:wrap;justify-content:center;border-top:2px solid rgba(255,249,240,0.2);padding-top:1rem;}
+.org .branches div{background:rgba(255,255,255,0.06);border:2px solid rgba(255,249,240,0.18);padding:0.6rem 1rem;border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:0.82rem;text-align:center;}
+.tl-step.dark{background:rgba(255,255,255,0.06);border:2px solid rgba(255,249,240,0.18);box-shadow:none;}
+.tl-step.dark .yr{color:#F2A900;}
+.tl-step.dark p{color:rgba(255,249,240,0.8);}
+.closing-foot{margin-top:2.8rem;padding-top:1.7rem;border-top:1px solid rgba(255,249,240,0.18);font-size:0.85rem;color:rgba(255,249,240,0.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+
+@media (max-width:760px){
+  .swot,.closing-grid{grid-template-columns:1fr;}
+  .timeline{grid-template-columns:1fr;}
+  .phase-head{flex-direction:column;}
+  body{font-size:17px;}
+  table{font-size:0.88rem;}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wordmark">APAS <span>CONSULTANCY</span></div>
+  <div class="tag-confidential">Confidential · Internal</div>
+</div>
+
+<div class="hero">
+  <p class="eyebrow">Business development command center</p>
+  <h1>The plan to build a world-class geopolitical advisory firm</h1>
+  <p class="dek">A concise, working dashboard of the full APAS Consultancy blueprint — positioning, pricing, named targets, the sales engine, financial plan, hiring roadmap, technology and a month-by-month rollout — organised into twelve sections for daily reference.</p>
+  <div class="stats">
+    <div class="stat"><span class="num">12</span><span class="label">Sections</span></div>
+    <div class="stat"><span class="num">₹60–80L</span><span class="label">Year 1 revenue target</span></div>
+    <div class="stat"><span class="num">8</span><span class="label">Year 1 client target</span></div>
+    <div class="stat"><span class="num">5</span><span class="label">Year roadmap</span></div>
+  </div>
+</div>
+
+<nav class="quicknav" id="quicknav">
+  <a class="qn-pill" href="#ch01" style="--c:#E0383D"><span class="dot"></span>01 Executive summary</a>
+  <a class="qn-pill" href="#ch02" style="--c:#1C5FE0"><span class="dot"></span>02 Identity &amp; positioning</a>
+  <a class="qn-pill" href="#ch03" style="--c:#F2A900"><span class="dot"></span>03 Services &amp; pricing</a>
+  <a class="qn-pill" href="#ch04" style="--c:#00A693"><span class="dot"></span>04 Market &amp; targets</a>
+  <a class="qn-pill" href="#ch05" style="--c:#7B3FE4"><span class="dot"></span>05 BD engine</a>
+  <a class="qn-pill" href="#ch06" style="--c:#E0368E"><span class="dot"></span>06 Marketing</a>
+  <a class="qn-pill" href="#ch07" style="--c:#1E8F4E"><span class="dot"></span>07 Ops &amp; risk</a>
+  <a class="qn-pill" href="#ch08" style="--c:#E8632C"><span class="dot"></span>08 Financial plan</a>
+  <a class="qn-pill" href="#ch09" style="--c:#2BB7E0"><span class="dot"></span>09 People</a>
+  <a class="qn-pill" href="#ch10" style="--c:#3D3DBF"><span class="dot"></span>10 Technology</a>
+  <a class="qn-pill" href="#ch11" style="--c:#5E9E1E"><span class="dot"></span>11 Roadmap</a>
+  <a class="qn-pill" href="#ch12" style="--c:#C81E5C"><span class="dot"></span>12 Risk register</a>
+</nav>
+
+<main>
+
+<section class="phase" id="ch01" style="--accent:#E0383D;--accent-deep:#8E1A1E">
+  <div class="phase-head">
+    <div class="num-badge">01</div>
+    <div>
+      <p class="eyebrow mono">Section 01</p>
+      <h2>Executive Summary</h2>
+      <p class="dek">The firm, the opportunity, and the number we're accountable to this year.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><h3>The firm</h3><p>Founder-led by Vice Admiral Sanjay Mahindru (Retd.). APAS turns geopolitical developments — sanctions, conflicts, trade shifts, maritime disruption — into specific guidance for executive teams.</p></div>
+    <div class="card"><h3>The opportunity</h3><p>Sanctions proliferation, Red Sea / South China Sea shipping disruption, and board-level pressure to show risk oversight are expanding demand among ₹500Cr+ firms with multi-country exposure — too big to ignore the risk, too small for an in-house intelligence team.</p></div>
+  </div>
+
+  <p class="subhead">Year 1 quarterly targets</p>
+  <div class="table-wrap"><table>
+    <tr><th>Metric</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Year 1</th></tr>
+    <tr><td>Signed clients (cumulative)</td><td>1</td><td>3</td><td>5</td><td>8</td><td><strong>8</strong></td></tr>
+    <tr><td>Active retainers</td><td>0</td><td>1</td><td>2</td><td>3</td><td><strong>3</strong></td></tr>
+    <tr><td>Revenue (₹ Lakh)</td><td>4–6</td><td>10–14</td><td>18–24</td><td>28–36</td><td><strong>60–80</strong></td></tr>
+    <tr><td>Qualified meetings</td><td>12</td><td>15</td><td>18</td><td>20</td><td><strong>65</strong></td></tr>
+  </table></div>
+  <p style="color:var(--ink-soft);font-size:0.92rem;font-style:italic;margin-top:0.8rem;">Planning targets, not actuals — revisit quarterly. Assumes ~₹6–9L average project value and 1–2 retainers at ₹1.5–2.5L/month from mid-year.</p>
+</section>
+
+<section class="phase" id="ch02" style="--accent:#1C5FE0;--accent-deep:#0E337D">
+  <div class="phase-head">
+    <div class="num-badge">02</div>
+    <div>
+      <p class="eyebrow mono">Section 02</p>
+      <h2>Identity, Positioning &amp; Brand</h2>
+      <p class="dek">What makes APAS different, stated specifically enough to repeat in a pitch.</p>
+    </div>
+  </div>
+
+  <p class="subhead">Positioning statement</p>
+  <div class="quote-block">"The boutique advisory firm maritime, defence and logistics executives call when a geopolitical event is moving faster than their internal teams can interpret it — a senior naval-strategist's judgment in 48 hours, not a six-week engagement."</div>
+
+  <p class="subhead">Competitive reference points</p>
+  <div class="table-wrap"><table>
+    <tr><th>Category</th><th>Example firms</th><th>APAS wins on</th><th>APAS concedes on</th></tr>
+    <tr><td>Global political-risk firms</td><td>Eurasia Group, Control Risks, Verisk Maplecroft</td><td>Cost, speed, maritime/defence depth</td><td>Global bench, brand</td></tr>
+    <tr><td>Big-4 / MBB geopolitics arms</td><td>McKinsey, BCG</td><td>Founder access, agility</td><td>Balance-sheet credibility</td></tr>
+    <tr><td>Independent analysts</td><td>Solo newsletters / Substacks</td><td>Institutional, executive-grade delivery</td><td>Lower price point</td></tr>
+  </table></div>
+
+  <p class="subhead">Core values, operationally defined</p>
+  <div class="grid">
+    <div class="card"><h3>Independence</h3><p>No engagement that requires favoring one government, vendor, or political position (see §7).</p></div>
+    <div class="card"><h3>Evidence-based</h3><p>Every brief cites 3+ primary sources; opinion always labeled as opinion.</p></div>
+    <div class="card"><h3>Speed</h3><p>48-hour initial assessment, 10-business-day full report unless scoped otherwise.</p></div>
+    <div class="card"><h3>Confidentiality</h3><p>NDA before any scoping call; client identity never used in marketing without consent.</p></div>
+  </div>
+</section>
+
+<section class="phase" id="ch03" style="--accent:#F2A900;--accent-deep:#8A5E00">
+  <div class="phase-head">
+    <div class="num-badge">03</div>
+    <div>
+      <p class="eyebrow mono">Section 03</p>
+      <h2>Services &amp; Pricing</h2>
+      <p class="dek">Four practices, named deliverables, real price bands.</p>
+    </div>
+  </div>
+
+  <p class="subhead">I — Geopolitical Intelligence &amp; Strategic Risk</p>
+  <div class="grid">
+    <div class="card"><h3>Country Risk Assessment</h3><p>25–35pg report: stability, regulatory trajectory, sanctions exposure, 12-mo outlook.</p><span class="price">₹3.5L – 6L · 3 weeks</span></div>
+    <div class="card"><h3>Sanctions Monitoring</h3><p>Monthly alert digest + quarterly deep-dive call.</p><span class="price">₹75K – 1.5L / month</span></div>
+    <div class="card"><h3>Crisis Brief</h3><p>5–8pg rapid assessment within 48 hours of a triggering event.</p><span class="price">₹1.25L – 2L · 48 hrs</span></div>
+  </div>
+
+  <p class="subhead">II — Maritime, Logistics &amp; Trade</p>
+  <div class="grid">
+    <div class="card"><h3>Maritime Risk Assessment</h3><p>Route-level risk map: chokepoints, piracy zones, insurance implications.</p><span class="price">₹4L – 7L · 3 weeks</span></div>
+    <div class="card"><h3>Supply Chain Risk Assessment</h3><p>Tier-1/2 supplier geopolitical exposure map + mitigation plan.</p><span class="price">₹6L – 12L · 4–6 weeks</span></div>
+  </div>
+
+  <p class="subhead">III — Defence, Security &amp; Strategic Affairs</p>
+  <div class="grid">
+    <div class="card"><h3>Defence Market Intelligence</h3><p>Market-entry brief: procurement cycles, buyers, competitive landscape.</p><span class="price">₹5L – 9L · 4 weeks</span></div>
+    <div class="card"><h3>Security Environment Assessment</h3><p>Regional threat-landscape report for a specific geography.</p><span class="price">₹4L – 7L · 3 weeks</span></div>
+  </div>
+
+  <p class="subhead">IV — Executive Strategy &amp; Board Advisory</p>
+  <div class="grid">
+    <div class="card"><h3>Board Advisory Retainer</h3><p>Quarterly board briefing + on-call advisory access.</p><span class="price">₹2L – 4L / quarter</span></div>
+    <div class="card"><h3>Executive Briefing</h3><p>90-min live briefing + 10pg leave-behind.</p><span class="price">₹1.5L – 2.5L · 2 weeks</span></div>
+  </div>
+
+  <p class="subhead">Engagement models</p>
+  <div class="tags">
+    <span class="tag">Project-based (default for new clients)</span><span class="tag">Advisory retainer (post-first-project)</span><span class="tag">Day-rate ₹75K–1.25L/day</span>
+  </div>
+</section>
+
+<section class="phase" id="ch04" style="--accent:#00A693;--accent-deep:#00564C">
+  <div class="phase-head">
+    <div class="num-badge">04</div>
+    <div>
+      <p class="eyebrow mono">Section 04</p>
+      <h2>Market Strategy &amp; Named Targets</h2>
+      <p class="dek">An actual research list, not just sector labels.</p>
+    </div>
+  </div>
+
+  <p class="subhead">Ideal client profile</p>
+  <div class="card wide"><ul>
+    <li>₹500Cr+ revenue, operations or supply chain in 2+ countries</li>
+    <li>Maritime, logistics, defence, energy, or infrastructure</li>
+    <li>Faced a geopolitical disruption in the last 18 months, or expanding internationally</li>
+    <li>Reachable within two introductions of the founder's network</li>
+  </ul></div>
+
+  <p class="subhead">Target organizations to research first <span style="font-weight:400;text-transform:none;font-size:0.8em;">(research starting points, not existing clients)</span></p>
+  <div class="table-wrap"><table>
+    <tr><th>Sector</th><th>Example organizations</th><th>Entry point</th></tr>
+    <tr><td>Maritime &amp; Shipping</td><td>Shipping Corporation of India, Great Eastern Shipping, Adani Ports</td><td>Strategy / Risk heads</td></tr>
+    <tr><td>Logistics</td><td>TCI, Allcargo, DP World India</td><td>Supply chain heads</td></tr>
+    <tr><td>Defence &amp; Aerospace</td><td>Mazagon Dock, Bharat Electronics, HAL, private vendors</td><td>Strategic planning leads</td></tr>
+    <tr><td>Energy &amp; Infra</td><td>ONGC, GAIL, Adani Energy, L&amp;T infra</td><td>Risk / international teams</td></tr>
+  </table></div>
+
+  <p class="subhead">Priority events &amp; SWOT</p>
+  <div class="tags">
+    <span class="tag">Maritime India Summit</span><span class="tag">DefExpo / Aero India</span><span class="tag">CII / FICCI trade councils</span><span class="tag">Regional chamber forum</span>
+  </div>
+  <br>
+  <div class="swot">
+    <div class="box" style="--sc:#1E8F4E"><h4>Strengths → leverage</h4><ul><li>Founder credibility, naval network — lead every proposal with it</li></ul></div>
+    <div class="box" style="--sc:#E0383D"><h4>Weakness → mitigation</h4><ul><li>Single-founder dependency — Key-Person Plan, §9</li></ul></div>
+    <div class="box" style="--sc:#1C5FE0"><h4>Opportunity → capture</h4><ul><li>Rising sanctions complexity — standing tracker product, §3</li></ul></div>
+    <div class="box" style="--sc:#E8632C"><h4>Threat → response</h4><ul><li>Larger firms entering niche — compete on speed, not price</li></ul></div>
+  </div>
+</section>
+
+<section class="phase" id="ch05" style="--accent:#7B3FE4;--accent-deep:#4A1F94">
+  <div class="phase-head">
+    <div class="num-badge">05</div>
+    <div>
+      <p class="eyebrow mono">Section 05</p>
+      <h2>Business Development Engine</h2>
+      <p class="dek">The repeatable process from first contact to signed retainer.</p>
+    </div>
+  </div>
+
+  <p class="subhead">Pipeline stages &amp; conversion</p>
+  <div class="table-wrap"><table>
+    <tr><th>Stage</th><th>Target conversion</th></tr>
+    <tr><td>1. Identified → 2. Outreach</td><td>40%</td></tr>
+    <tr><td>2. Outreach → 3. Discovery call</td><td>60%</td></tr>
+    <tr><td>3. Discovery → 4. Proposal sent</td><td>35%</td></tr>
+    <tr><td>5. Delivered → Retainer pitch</td><td>30%</td></tr>
+  </table></div>
+
+  <p class="subhead">Channels, ranked by expected Year 1 contribution</p>
+  <div class="grid">
+    <div class="card"><h3>1. Founder network</h3><p>50–60% of Year 1 clients — direct introductions.</p></div>
+    <div class="card"><h3>2. Thought leadership</h3><p>20–25% — inbound from LinkedIn and articles.</p></div>
+    <div class="card"><h3>3. Conferences</h3><p>10–15% — longer cycle, high credibility.</p></div>
+    <div class="card"><h3>4. Referrals</h3><p>Starts Q3; becomes dominant channel by Year 3.</p></div>
+  </div>
+
+  <p class="subhead">Strategic partnership targets</p>
+  <div class="tags">
+    <span class="tag">Maritime/trade law firms</span><span class="tag">Tier-2 consulting firm (white-label)</span><span class="tag">University IR / strategic-studies dept</span>
+  </div>
+</section>
+
+<section class="phase" id="ch06" style="--accent:#E0368E;--accent-deep:#8A1F58">
+  <div class="phase-head">
+    <div class="num-badge">06</div>
+    <div>
+      <p class="eyebrow mono">Section 06</p>
+      <h2>Marketing &amp; Thought Leadership</h2>
+      <p class="dek">A content engine tied directly to pipeline, not just visibility.</p>
+    </div>
+  </div>
+
+  <div class="table-wrap"><table>
+    <tr><th>Format</th><th>Frequency</th><th>Purpose</th></tr>
+    <tr><td>LinkedIn commentary</td><td>2–3x / week</td><td>Visibility, demonstrates speed</td></tr>
+    <tr><td>Long-form article</td><td>1x / month</td><td>Lead magnet, sales leave-behind</td></tr>
+    <tr><td>Quarterly outlook report</td><td>1x / quarter</td><td>Flagship asset, gated for newsletter growth</td></tr>
+    <tr><td>Conference talk / panel</td><td>1x / quarter</td><td>Network expansion, credibility</td></tr>
+  </table></div>
+
+  <p class="subhead">KPIs, tied to the funnel they feed</p>
+  <div class="tags">
+    <span class="tag">Newsletter subs → Stage 2 list · target 500 by Year 1</span><span class="tag">Inbound calls → Stage 3 · target 2/month by Q3</span><span class="tag">Speaking invites → Stage 1/2 · target 4 in Year 1</span>
+  </div>
+</section>
+
+<section class="phase" id="ch07" style="--accent:#1E8F4E;--accent-deep:#11532D">
+  <div class="phase-head">
+    <div class="num-badge">07</div>
+    <div>
+      <p class="eyebrow mono">Section 07</p>
+      <h2>Operations, Quality &amp; Risk Governance</h2>
+      <p class="dek">Consistent delivery, plus the policy gaps a defence-adjacent firm can't skip.</p>
+    </div>
+  </div>
+
+  <p class="subhead">Delivery lifecycle</p>
+  <div class="card wide"><ul>
+    <li>Discovery &amp; scoping (1–3 days) — confirm the question, not just the topic</li>
+    <li>Research &amp; primary-source gathering (40–60% of timeline)</li>
+    <li>Internal peer review — every report, second eyes, before delivery</li>
+    <li>Client delivery &amp; walkthrough call</li>
+    <li>14-day follow-up — satisfaction check + retainer pitch</li>
+  </ul></div>
+
+  <p class="subhead">Conflict of interest &amp; liability policy <span style="font-weight:400;text-transform:none;font-size:0.8em;">(new)</span></p>
+  <div class="grid">
+    <div class="card"><h3>Conflict of interest</h3><p>No engagements assessing Indian armed forces operational posture, procurement the founder was personally involved in, or competing vendors in an active bid. Standing check at every discovery call.</p></div>
+    <div class="card"><h3>Forecasting liability</h3><p>Every report carries a standard disclaimer — forecasts are probabilistic, liability capped at engagement fee. Contracts reviewed by external counsel before first signature.</p></div>
+  </div>
+</section>
+
+<section class="phase" id="ch08" style="--accent:#E8632C;--accent-deep:#8F3814">
+  <div class="phase-head">
+    <div class="num-badge">08</div>
+    <div>
+      <p class="eyebrow mono">Section 08</p>
+      <h2>Financial Plan</h2>
+      <p class="dek">The numbers, year by year.</p>
+    </div>
+  </div>
+
+  <div class="table-wrap"><table>
+    <tr><th>Year</th><th>Clients</th><th>Retainers</th><th>Revenue (₹L)</th><th>Focus</th></tr>
+    <tr><td>1</td><td>8</td><td>3</td><td>60–80</td><td>Prove the model</td></tr>
+    <tr><td>2</td><td>16</td><td>6</td><td>140–180</td><td>Convert to retainers, hire first associate</td></tr>
+    <tr><td>3</td><td>26</td><td>10</td><td>260–320</td><td>South Asia / Middle East pilots</td></tr>
+    <tr><td>4</td><td>38</td><td>15</td><td>420–500</td><td>Subscription intelligence product</td></tr>
+    <tr><td>5</td><td>50+</td><td>20+</td><td>600–750</td><td>Recognized global boutique firm</td></tr>
+  </table></div>
+
+  <p class="subhead">Cost structure (Year 1, % of revenue)</p>
+  <div class="tags">
+    <span class="tag">Compensation 35–40%</span><span class="tag">BD &amp; travel 12–15%</span><span class="tag">Tech &amp; research 8–10%</span><span class="tag">Marketing 6–8%</span><span class="tag">Admin &amp; legal 8–10%</span><span class="tag">Contingency 10%</span>
+  </div>
+
+  <p class="subhead">Discipline</p>
+  <div class="tags">
+    <span class="tag">50% upfront billing under ₹5L</span><span class="tag">Retainers invoiced in advance</span><span class="tag">3-month cash reserve minimum</span><span class="tag">No client &gt;25% of revenue past Year 1</span>
+  </div>
+</section>
+
+<section class="phase" id="ch09" style="--accent:#2BB7E0;--accent-deep:#0E5E78">
+  <div class="phase-head">
+    <div class="num-badge">09</div>
+    <div>
+      <p class="eyebrow mono">Section 09</p>
+      <h2>People &amp; Organization</h2>
+      <p class="dek">From one-person firm to a resilient small team.</p>
+    </div>
+  </div>
+
+  <div class="table-wrap"><table>
+    <tr><th>Milestone</th><th>Timing</th><th>Role</th><th>Why</th></tr>
+    <tr><td>1st hire</td><td>Month 3</td><td>Part-time research associate</td><td>Free founder time for BD</td></tr>
+    <tr><td>2nd hire</td><td>Month 9</td><td>Senior associate / deputy</td><td>Direct response to key-person risk</td></tr>
+    <tr><td>3rd hire</td><td>Year 2</td><td>Junior analyst</td><td>Support retainer base</td></tr>
+    <tr><td>4th hire</td><td>Year 2–3</td><td>BD / client success lead</td><td>Free founder for delivery</td></tr>
+  </table></div>
+
+  <p class="subhead">Key-person risk plan <span style="font-weight:400;text-transform:none;font-size:0.8em;">(new)</span></p>
+  <div class="card wide"><ul>
+    <li>Month 3+: every client relationship has a documented account brief</li>
+    <li>Month 9: senior associate empowered to lead client calls, not just research</li>
+    <li>Year 2: at least one client/quarter led end-to-end by someone other than the founder</li>
+    <li>Past ₹1Cr revenue: key-person insurance in place</li>
+  </ul></div>
+</section>
+
+<section class="phase" id="ch10" style="--accent:#3D3DBF;--accent-deep:#232370">
+  <div class="phase-head">
+    <div class="num-badge">10</div>
+    <div>
+      <p class="eyebrow mono">Section 10</p>
+      <h2>Technology Stack</h2>
+      <p class="dek">Lean tooling appropriate to a founder-led firm.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><h3>CRM</h3><p>Free/low-cost tier until pipeline exceeds ~30 active contacts.</p></div>
+    <div class="card"><h3>Research &amp; monitoring</h3><p>One paid sanctions/news monitoring feed from Month 1; second after first retainer.</p></div>
+    <div class="card"><h3>Document management</h3><p>Access-controlled cloud storage from Day 1 — non-negotiable given client confidentiality.</p></div>
+    <div class="card"><h3>Future (Year 3+)</h3><p>Subscription geopolitical monitoring dashboard for retainer clients — explicitly not a Year 1 commitment.</p></div>
+  </div>
+</section>
+
+<section class="phase" id="ch11" style="--accent:#5E9E1E;--accent-deep:#36590E">
+  <div class="phase-head">
+    <div class="num-badge">11</div>
+    <div>
+      <p class="eyebrow mono">Section 11</p>
+      <h2>Implementation Roadmap</h2>
+      <p class="dek">Month-by-month for Year 1, then concrete milestones to Year 5.</p>
+    </div>
+  </div>
+
+  <p class="subhead">Year 1, by quarter</p>
+  <div class="table-wrap"><table>
+    <tr><th>Months</th><th>Key actions</th><th>Exit criteria</th></tr>
+    <tr><td>1–2</td><td>Entity, contracts, website live, outreach begins, 3 articles published</td><td>5 discovery calls held</td></tr>
+    <tr><td>3–5</td><td>First proposal sent, associate hired, first project delivered</td><td>1 client signed, 1 reference secured</td></tr>
+    <tr><td>6–8</td><td>Outlook report #1, conference pursued, first retainer pitch</td><td>3 clients, 1 retainer</td></tr>
+    <tr><td>9–12</td><td>Senior associate hire begins, Year 2 planning</td><td>8 clients, 3 retainers, ₹60–80L</td></tr>
+  </table></div>
+
+  <p class="subhead">Years 2–5 milestones</p>
+  <div class="timeline">
+    <div class="tl-step"><span class="yr">Year 2</span><p>Senior associate leads accounts, 6 retainers, first partnership signed</p></div>
+    <div class="tl-step"><span class="yr">Year 3</span><p>First international engagement, junior analyst hired, paid outlook subscription</p></div>
+    <div class="tl-step"><span class="yr">Year 4</span><p>Monitoring dashboard MVP, BD lead hired, revenue &gt;₹400L</p></div>
+    <div class="tl-step"><span class="yr">Year 5</span><p>20+ retainers, recognized international speaker status</p></div>
+  </div>
+</section>
+
+<section class="phase" id="ch12" style="--accent:#C81E5C;--accent-deep:#771036">
+  <div class="phase-head">
+    <div class="num-badge">12</div>
+    <div>
+      <p class="eyebrow mono">Section 12</p>
+      <h2>Risk Register</h2>
+      <p class="dek">Named risks, owners, responses.</p>
+    </div>
+  </div>
+
+  <div class="table-wrap"><table>
+    <tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Response</th></tr>
+    <tr><td>Founder unavailability</td><td>Medium</td><td>High</td><td>Key-person plan, §9</td></tr>
+    <tr><td>Client payment delay</td><td>Medium</td><td>Medium</td><td>50% upfront, 30-day DSO target</td></tr>
+    <tr><td>Forecast disputed by client</td><td>Medium</td><td>Medium</td><td>Confidence-labeled forecasts, liability cap</td></tr>
+    <tr><td>Conflict of interest</td><td>Low</td><td>High</td><td>Standing check at discovery stage</td></tr>
+    <tr><td>Slow Year 1 pipeline</td><td>Medium</td><td>High</td><td>Diversify channels from Month 1</td></tr>
+    <tr><td>Large-firm price undercut</td><td>Low</td><td>Medium</td><td>Compete on speed/depth, not price</td></tr>
+  </table></div>
+</section>
+
+</main>
+
+<div class="closing">
+  <div class="closing-inner">
+    <p class="eyebrow mono">Strategic motto</p>
+    <p class="motto">"Transforming geopolitical complexity into strategic advantage."</p>
+
+    <div class="closing-grid">
+      <div>
+        <p class="subhead">Closing note</p>
+        <p style="color:rgba(255,249,240,0.78);font-size:1.04rem;max-width:62ch;">This is a working document. The Year 1 targets, pricing bands, and conversion rates above should be revisited every quarter against actual results — its value is in being corrected by reality, not in being right on the first attempt.</p>
+      </div>
+      <div>
+        <p class="subhead">Organisational structure</p>
+        <div class="org">
+          <div class="top">Founder &amp; Principal Consultant</div>
+          <div class="branches">
+            <div>Business<br>development</div>
+            <div>Research &amp;<br>advisory</div>
+            <div>Marketing &amp;<br>comms</div>
+            <div>Finance &amp;<br>admin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="closing-foot">
+      <span>APAS Business Development Command Center</span>
+      <span>© 2026 APAS Consultancy — Internal, confidential</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const pills = Array.from(document.querySelectorAll('.qn-pill'));
+const sections = Array.from(document.querySelectorAll('.phase'));
+const map = new Map(pills.map(p => [p.getAttribute('href').slice(1), p]));
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const pill = map.get(entry.target.id);
+    if(!pill) return;
+    if(entry.isIntersecting){
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      pill.scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'});
+    }
+  });
+}, {rootMargin:'-45% 0px -45% 0px'});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
