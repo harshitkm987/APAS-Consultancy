@@ -171,6 +171,35 @@
     .load-fade { opacity: 1 !important; animation: none !important; }
     .card-float { animation: none !important; }
     .compass-needle { animation: none !important; }
+    .zone-dot, .zone-halo { animation: none !important; }
+  }
+
+
+  /* ---------- Conflict zone pulse animations ---------- */
+  @keyframes zoneBreath {
+    0%, 100% { opacity: 0.72; }
+    50%       { opacity: 1;    }
+  }
+  @keyframes zoneBigPulse {
+    0%   { transform: scale(1);   filter: drop-shadow(0 0 3px #ff2222); }
+    3%   { transform: scale(3.2); filter: drop-shadow(0 0 18px #ff0000) drop-shadow(0 0 8px #ffaaaa); }
+    9%   { transform: scale(1.9); filter: drop-shadow(0 0 9px #ff3333); }
+    18%  { transform: scale(1.2); filter: drop-shadow(0 0 4px #ff2222); }
+    24%  { transform: scale(1);   filter: drop-shadow(0 0 3px #ff2222); }
+    100% { transform: scale(1);   filter: drop-shadow(0 0 3px #ff2222); }
+  }
+  .zone-dot {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation:
+      zoneBreath   2.8s ease-in-out infinite,
+      zoneBigPulse 50s  linear     infinite;
+  }
+  .zone-halo {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: zoneBreath 2.8s ease-in-out infinite;
+    opacity: 0.3;
   }
 
   /* Focus visibility for accessibility */
@@ -193,6 +222,7 @@
 
     <div class="hidden md:flex items-center gap-10 font-medium text-sm text-navy/80">
       <a href="#foreword" class="hover:text-ocean transition-colors">Foreword</a>
+      <a href="#highlights" class="hover:text-ocean transition-colors">Insights</a>
       <a href="#practices" class="hover:text-ocean transition-colors">Practices</a>
       <a href="#dashboard" class="hover:text-ocean transition-colors">Geopolitical Flow</a>
       <a href="#contact" class="hover:text-ocean transition-colors">Contact</a>
@@ -214,6 +244,7 @@
   <!-- Mobile menu -->
   <div id="mobileMenu" class="hidden md:hidden glass-strong border-t border-white/40 px-6 py-6 flex flex-col gap-5 text-navy font-medium">
     <a href="#foreword" class="mobile-link">Foreword</a>
+    <a href="#highlights" class="mobile-link">Insights</a>
     <a href="#practices" class="mobile-link">Practices</a>
     <a href="#dashboard" class="mobile-link">Geopolitical Flow</a>
     <a href="#contact" class="mobile-link">Contact</a>
@@ -245,10 +276,10 @@
         <p class="kicker mb-5 load-fade d1">GEOPOLITICAL RISK &amp; STRATEGIC ADVISORY</p>
         <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl leading-[1.08] text-navy load-fade d2">
           Navigate complexity.<br/>
-          <span class="text-gradient">Chart advantage.</span>
+          <span class="text-gradient">Drive Strategic Outcome.</span>
         </h1>
         <p class="mt-7 text-lg md:text-xl text-navy/75 leading-relaxed max-w-xl load-fade d3">
-          Founded by a former Indian Navy Admiral, APAS brings naval discipline and strategic foresight to the world's most consequential decisions — helping institutions read the current before it turns.
+          APAS advises the premier global entities on the geopolitical forces reshaping markets, supply chains, and sovereign relationships — converting complex global dynamics into clear strategic direction and measurable business advantage, before shifts become consensus..
         </p>
         <div class="mt-10 flex flex-wrap gap-4 load-fade d4">
           <a href="#contact" class="btn-primary px-7 py-3.5 rounded-full font-semibold">Request a Strategic Briefing</a>
@@ -283,6 +314,41 @@
               preserveAspectRatio="xMidYMid slice"
               style="filter: contrast(1.18) saturate(1.35) brightness(1.05);"
             />
+
+            <!-- ── CONFLICT ZONE CIRCLES (clipped to compass circle) ── -->
+            <g clip-path="url(#circleClip)">
+
+              <!-- Canada / Greenland  angle≈327° delay≈-4.61s -->
+              <circle class="zone-halo" cx="107.8" cy="74.9" r="11" fill="#ff2222"/>
+              <circle class="zone-dot"  cx="107.8" cy="74.9" r="5"  fill="#ff3333"
+                style="animation-delay: 0s, -4.61s;"/>
+
+              <!-- Brazil  angle≈249° delay≈-15.44s -->
+              <circle class="zone-halo" cx="69.9" cy="208.8" r="11" fill="#ff2222"/>
+              <circle class="zone-dot"  cx="69.9" cy="208.8" r="5"  fill="#ff3333"
+                style="animation-delay: 0s, -15.44s;"/>
+
+              <!-- Eastern Europe / Ukraine  angle≈35° delay≈-45.19s -->
+              <circle class="zone-halo" cx="194.4" cy="134.8" r="11" fill="#ff2222"/>
+              <circle class="zone-dot"  cx="194.4" cy="134.8" r="5"  fill="#ff3333"
+                style="animation-delay: 0s, -45.19s;"/>
+
+              <!-- Gulf / Red Sea  angle≈85° delay≈-38.19s -->
+              <circle class="zone-halo" cx="210.6" cy="166.5" r="11" fill="#ff2222"/>
+              <circle class="zone-dot"  cx="210.6" cy="166.5" r="5"  fill="#ff3333"
+                style="animation-delay: 0s, -38.19s;"/>
+
+              <!-- East Africa  angle≈145° delay≈-29.91s -->
+              <circle class="zone-halo" cx="202.5" cy="215.8" r="11" fill="#ff2222"/>
+              <circle class="zone-dot"  cx="202.5" cy="215.8" r="5"  fill="#ff3333"
+                style="animation-delay: 0s, -29.91s;"/>
+
+              <!-- SE Asia  angle≈102° delay≈-35.80s -->
+              <circle class="zone-halo" cx="267.4" cy="191.1" r="11" fill="#ff2222"/>
+              <circle class="zone-dot"  cx="267.4" cy="191.1" r="5"  fill="#ff3333"
+                style="animation-delay: 0s, -35.80s;"/>
+
+            </g>
 
             <!-- subtle dark vignette so compass elements read clearly on top -->
             <circle cx="170" cy="170" r="167" fill="url(#vignette)"/>
@@ -373,6 +439,345 @@
     <path d="M0 60 C 240 110, 480 10, 720 55 C 960 100, 1200 20, 1440 60 L1440 110 L0 110 Z" fill="#F5F9FC"/>
   </svg>
 </header>
+
+<!-- ================= HIGHLIGHTS STRIP ================= -->
+<style>
+  /* Per-card accent colours */
+  .hcard-intel  { --hc-accent:#3B82F6; --hc-glow:rgba(59,130,246,0.18); --hc-bar:linear-gradient(135deg,#1E40AF,#3B82F6); }
+  .hcard-events { --hc-accent:#8B5CF6; --hc-glow:rgba(139,92,246,0.18); --hc-bar:linear-gradient(135deg,#5B21B6,#8B5CF6); }
+  .hcard-risk   { --hc-accent:#EF4444; --hc-glow:rgba(239,68,68,0.18);  --hc-bar:linear-gradient(135deg,#991B1B,#EF4444); }
+  .hcard-proj   { --hc-accent:#10B981; --hc-glow:rgba(16,185,129,0.18); --hc-bar:linear-gradient(135deg,#065F46,#10B981); }
+
+  .hcard {
+    position: relative;
+    background: #FFFFFF;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.9);
+    box-shadow: 0 4px 24px -6px rgba(11,37,69,0.10), 0 0 0 1px rgba(255,255,255,0.6);
+    transition: transform .35s ease, box-shadow .35s ease;
+    display: flex; flex-direction: column;
+  }
+  .hcard:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 48px -12px var(--hc-glow), 0 4px 16px -4px rgba(11,37,69,0.12);
+  }
+  /* coloured top bar */
+  .hcard::before {
+    content: '';
+    position: absolute; top:0; left:0; right:0; height:4px;
+    background: var(--hc-bar);
+  }
+  /* large faded number watermark */
+  .hcard-num {
+    position: absolute; top:-10px; right:12px;
+    font-family: 'Playfair Display', serif;
+    font-size: 7rem; font-weight: 700; line-height: 1;
+    color: var(--hc-accent); opacity: 0.06;
+    pointer-events: none; user-select: none;
+  }
+  .hcard-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--hc-bar);
+    box-shadow: 0 6px 18px -4px var(--hc-glow);
+    flex-shrink: 0;
+  }
+  .hcard-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem; letter-spacing: 0.14em; font-weight: 500;
+    padding: 2px 8px; border-radius: 999px;
+    background: var(--hc-glow);
+    color: var(--hc-accent);
+    border: 1px solid var(--hc-accent);
+    opacity: 0.9;
+  }
+  .hcard-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    color: var(--hc-accent);
+    transition: gap .2s ease;
+  }
+  .hcard-link:hover { gap: 10px; }
+
+  /* risk meter bar */
+  .risk-meter-track { height:4px; border-radius:4px; background:rgba(0,0,0,0.07); overflow:hidden; }
+  .risk-meter-fill  { height:100%; border-radius:4px; }
+
+  /* pulse dot for live risk */
+  @keyframes liveRingPulse {
+    0%,100% { transform: scale(1); opacity: 1; }
+    50%     { transform: scale(1.8); opacity: 0; }
+  }
+  .live-dot-ring {
+    position: absolute; inset:-3px; border-radius:50%;
+    border: 2px solid currentColor; opacity: 0;
+    animation: liveRingPulse 2s ease-in-out infinite;
+  }
+
+  /* section wavy bg */
+  .highlights-bg {
+    background: linear-gradient(160deg, #0B2545 0%, #123360 45%, #1B4F72 100%);
+    position: relative; overflow: hidden;
+  }
+
+  /* stat counter strip */
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 700; line-height: 1;
+    background: linear-gradient(135deg, #fff 30%, #9FC4E0);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+</style>
+
+<section id="highlights" class="highlights-bg py-24 md:py-32">
+
+  <!-- bathymetric contour watermark reused -->
+  <svg class="contour-watermark" viewBox="0 0 1200 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:0.08;">
+    <g fill="none" stroke="#9FC4E0" stroke-width="1.2">
+      <path d="M-50 200 C 200 160, 380 240, 600 190 C 820 140, 960 230, 1190 180"/>
+      <path d="M-50 350 C 220 310, 400 390, 620 340 C 840 290, 960 380, 1200 330"/>
+      <path d="M-50 500 C 200 560, 380 480, 600 530 C 820 580, 950 490, 1180 540"/>
+      <path d="M-50 650 C 220 710, 400 630, 620 680 C 840 730, 960 640, 1190 690"/>
+    </g>
+  </svg>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-10">
+
+    <!-- Section header -->
+    <div class="reveal flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+      <div>
+        <p class="kicker mb-4" style="color:#9FC4E0;">AT A GLANCE</p>
+        <h2 class="font-serif text-3xl md:text-4xl text-white">Where insight becomes advantage</h2>
+      </div>
+      <!-- live stat strip -->
+      <div class="flex gap-8 shrink-0">
+        <div class="text-center">
+          <p class="stat-val">38+</p>
+          <p class="text-mist/50 text-xs font-mono tracking-wide mt-1">ENGAGEMENTS</p>
+        </div>
+        <div class="w-px bg-white/10"></div>
+        <div class="text-center">
+          <p class="stat-val">14</p>
+          <p class="text-mist/50 text-xs font-mono tracking-wide mt-1">ACTIVE ZONES</p>
+        </div>
+        <div class="w-px bg-white/10"></div>
+        <div class="text-center">
+          <p class="stat-val">9</p>
+          <p class="text-mist/50 text-xs font-mono tracking-wide mt-1">PUBLICATIONS</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Four cards -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+
+      <!-- ── 1. Intelligence Briefs ── -->
+      <div class="reveal card-float delay-1 h-full">
+      <div class="hcard hcard-intel h-full p-7">
+        <span class="hcard-num" aria-hidden="true">01</span>
+        <div class="hcard-icon mb-5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            <line x1="9" y1="7" x2="15" y2="7" opacity="0.7"/><line x1="9" y1="11" x2="15" y2="11" opacity="0.7"/><line x1="9" y1="15" x2="12" y2="15" opacity="0.7"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl text-navy mb-2">Intelligence Briefs</h3>
+        <p class="text-navy/60 text-sm leading-relaxed mb-6">Proprietary publications and analytical notes on fast-moving geopolitical developments — for retained clients.</p>
+
+        <ul class="space-y-3.5 mt-auto">
+          <li class="group cursor-default">
+            <div class="flex items-start gap-3 p-3 rounded-xl transition-colors hover:bg-blue-50">
+              <div class="w-1 h-full rounded-full mt-1 shrink-0" style="background:var(--hc-bar); min-height:36px;"></div>
+              <div>
+                <span class="hcard-tag mb-1.5">JUN 2026 · MARITIME</span>
+                <p class="text-sm font-semibold text-navy leading-snug mt-1">Red Sea Chokepoint: Escalation Scenarios for Q3 2026</p>
+              </div>
+            </div>
+          </li>
+          <li class="group cursor-default">
+            <div class="flex items-start gap-3 p-3 rounded-xl transition-colors hover:bg-blue-50">
+              <div class="w-1 rounded-full mt-1 shrink-0" style="background:var(--hc-bar); min-height:36px;"></div>
+              <div>
+                <span class="hcard-tag mb-1.5">MAY 2026 · INDO-PACIFIC</span>
+                <p class="text-sm font-semibold text-navy leading-snug mt-1">Taiwan Strait Dynamics and Supply Chain Exposure</p>
+              </div>
+            </div>
+          </li>
+          <li class="group cursor-default">
+            <div class="flex items-start gap-3 p-3 rounded-xl transition-colors hover:bg-blue-50">
+              <div class="w-1 rounded-full mt-1 shrink-0" style="background:var(--hc-bar); min-height:36px;"></div>
+              <div>
+                <span class="hcard-tag mb-1.5">APR 2026 · ENERGY</span>
+                <p class="text-sm font-semibold text-navy leading-snug mt-1">Gulf Energy Security: India's Strategic Calculus</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div class="mt-6 pt-5 border-t border-gray-100">
+          <a href="#contact" class="hcard-link">Request access <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      </div>
+
+      <!-- ── 2. Events & Briefings ── -->
+      <div class="reveal card-float delay-2 h-full">
+      <div class="hcard hcard-events h-full p-7">
+        <span class="hcard-num" aria-hidden="true">02</span>
+        <div class="hcard-icon mb-5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            <circle cx="8" cy="15" r="1" fill="#fff" stroke="none"/><circle cx="12" cy="15" r="1" fill="#fff" stroke="none"/><circle cx="16" cy="15" r="1" fill="#fff" stroke="none"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl text-navy mb-2">Events &amp; Briefings</h3>
+        <p class="text-navy/60 text-sm leading-relaxed mb-6">Closed-door roundtables, executive seminars, and strategic workshops — by invitation and direct inquiry.</p>
+
+        <ul class="space-y-3 mt-auto">
+          <li class="rounded-2xl p-4 border border-purple-100" style="background:linear-gradient(135deg,#F5F3FF,#EDE9FE);">
+            <div class="flex items-center justify-between mb-1.5">
+              <p class="text-[0.65rem] font-mono tracking-wide text-purple-500">15 AUG 2026 · NEW DELHI</p>
+              <span class="text-[0.6rem] font-mono px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200">Open</span>
+            </div>
+            <p class="text-sm font-semibold text-navy leading-snug">Indo-Pacific Security Roundtable</p>
+          </li>
+          <li class="rounded-2xl p-4 border border-purple-100" style="background:linear-gradient(135deg,#F5F3FF,#EDE9FE);">
+            <div class="flex items-center justify-between mb-1.5">
+              <p class="text-[0.65rem] font-mono tracking-wide text-purple-500">22 SEP 2026 · MUMBAI</p>
+              <span class="text-[0.6rem] font-mono px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200">Invite Only</span>
+            </div>
+            <p class="text-sm font-semibold text-navy leading-snug">Geopolitical Risk &amp; Sovereign Wealth Workshop</p>
+          </li>
+          <li class="rounded-2xl p-4 border border-purple-100" style="background:linear-gradient(135deg,#F5F3FF,#EDE9FE);">
+            <div class="flex items-center justify-between mb-1.5">
+              <p class="text-[0.65rem] font-mono tracking-wide text-purple-500">NOV 2026 · SINGAPORE</p>
+              <span class="text-[0.6rem] font-mono px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 border border-sky-200">Upcoming</span>
+            </div>
+            <p class="text-sm font-semibold text-navy leading-snug">Maritime Chokepoints &amp; Trade Resilience Forum</p>
+          </li>
+        </ul>
+        <div class="mt-6 pt-5 border-t border-gray-100">
+          <a href="#contact" class="hcard-link">Enquire about events <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      </div>
+
+      <!-- ── 3. Risk Monitor ── -->
+      <div class="reveal card-float delay-3 h-full">
+      <div class="hcard hcard-risk h-full p-7">
+        <span class="hcard-num" aria-hidden="true">03</span>
+        <div class="hcard-icon mb-5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <!-- LIVE badge -->
+        <div class="flex items-center gap-2 mb-3">
+          <h3 class="font-serif text-xl text-navy">Risk Monitor</h3>
+          <span class="flex items-center gap-1.5 text-[0.6rem] font-mono px-2 py-0.5 rounded-full bg-red-50 text-red-600 border border-red-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span> LIVE
+          </span>
+        </div>
+        <p class="text-navy/60 text-sm leading-relaxed mb-6">Current flashpoints rated by threat severity and strategic opportunity for exposed stakeholders.</p>
+
+        <ul class="space-y-4 mt-auto">
+          <li>
+            <div class="flex items-center justify-between mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="relative flex w-3 h-3">
+                  <span class="live-dot-ring text-red-500"></span>
+                  <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                </span>
+                <p class="text-sm font-semibold text-navy">Red Sea — Houthi Risk</p>
+              </div>
+              <span class="text-[0.6rem] font-mono text-red-600 font-bold">CRITICAL</span>
+            </div>
+            <div class="risk-meter-track"><div class="risk-meter-fill bg-red-500" style="width:92%"></div></div>
+            <p class="text-[0.68rem] text-navy/50 mt-1">Opportunity: Alternate routing play</p>
+          </li>
+          <li>
+            <div class="flex items-center justify-between mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-amber-500 shrink-0"></span>
+                <p class="text-sm font-semibold text-navy">E. Europe — Sanctions Spillover</p>
+              </div>
+              <span class="text-[0.6rem] font-mono text-amber-600 font-bold">ELEVATED</span>
+            </div>
+            <div class="risk-meter-track"><div class="risk-meter-fill bg-amber-500" style="width:68%"></div></div>
+            <p class="text-[0.68rem] text-navy/50 mt-1">Opportunity: Supply chain reconfig</p>
+          </li>
+          <li>
+            <div class="flex items-center justify-between mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-amber-400 shrink-0"></span>
+                <p class="text-sm font-semibold text-navy">South China Sea — Nav. Tensions</p>
+              </div>
+              <span class="text-[0.6rem] font-mono text-amber-500 font-bold">ELEVATED</span>
+            </div>
+            <div class="risk-meter-track"><div class="risk-meter-fill bg-amber-400" style="width:60%"></div></div>
+            <p class="text-[0.68rem] text-navy/50 mt-1">Opportunity: IOR corridor shift</p>
+          </li>
+          <li>
+            <div class="flex items-center justify-between mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500 shrink-0"></span>
+                <p class="text-sm font-semibold text-navy">India–Gulf Trade Corridor</p>
+              </div>
+              <span class="text-[0.6rem] font-mono text-emerald-600 font-bold">LOW</span>
+            </div>
+            <div class="risk-meter-track"><div class="risk-meter-fill bg-emerald-500" style="width:22%"></div></div>
+            <p class="text-[0.68rem] text-navy/50 mt-1">Opportunity: IMEC acceleration</p>
+          </li>
+        </ul>
+        <div class="mt-6 pt-5 border-t border-gray-100">
+          <a href="#dashboard" class="hcard-link">View full dashboard <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      </div>
+
+      <!-- ── 4. Consulting Projects ── -->
+      <div class="reveal card-float delay-4 h-full">
+      <div class="hcard hcard-proj h-full p-7">
+        <span class="hcard-num" aria-hidden="true">04</span>
+        <div class="hcard-icon mb-5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl text-navy mb-2">Consulting Projects</h3>
+        <p class="text-navy/60 text-sm leading-relaxed mb-6">Anonymised engagements illustrating the breadth of APAS's mandate — from sovereign mandates to private sector strategy.</p>
+
+        <ul class="space-y-3.5 mt-auto">
+          <li class="rounded-2xl p-4" style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5); border:1px solid #A7F3D0;">
+            <span class="hcard-tag mb-2">SOVEREIGN WEALTH · GULF</span>
+            <p class="text-sm font-semibold text-navy leading-snug mt-1.5">Portfolio risk assessment for a GCC fund — threat matrix &amp; rebalancing roadmap delivered.</p>
+            <div class="flex items-center gap-1.5 mt-2.5">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="text-[0.65rem] font-mono text-emerald-700">Delivered · 2025</span>
+            </div>
+          </li>
+         
+          <li class="rounded-2xl p-4" style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5); border:1px solid #A7F3D0;">
+            <span class="hcard-tag mb-2">ENERGY · INDIAN OCEAN</span>
+            <p class="text-sm font-semibold text-navy leading-snug mt-1.5">Chokepoint vulnerability study — scenario planning across three escalation levels.</p>
+            <div class="flex items-center gap-1.5 mt-2.5">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="text-[0.65rem] font-mono text-emerald-700">Delivered · 2026</span>
+            </div>
+          </li>
+        </ul>
+        <div class="mt-6 pt-5 border-t border-gray-100">
+          <a href="#contact" class="hcard-link">Discuss your mandate <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!-- ================= FOUNDER'S FOREWORD ================= -->
 <section id="foreword" class="bg-section-tint py-24 md:py-32">
